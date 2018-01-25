@@ -35,3 +35,6 @@ To start the server
 $ cd git/clonechat-server
 $ npm start
 ```
+
+### Testing with Postman
+You can access the Postman collection [here](https://www.getpostman.com/collections/ae0ff7eb103b83bcc057)
