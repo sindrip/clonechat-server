@@ -1,0 +1,23 @@
+{
+  "name": "clonechat-server",
+  "version": "0.1.0",
+  "description": "A simple snapchat clone",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sindrip/clonechat-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sindrip/clonechat-server/issues"
+  },
+  "homepage": "https://github.com/sindrip/clonechat-server#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
