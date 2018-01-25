@@ -17,6 +17,8 @@ $ cd git/clonechat-server/server
 $ knex migrate:latest --env development
 ```
 
+### Starting the server
+You need to have a config.json file under /clonechat-server/server/config with the relevant keys filled in
 ```json
 {
     "development": {
