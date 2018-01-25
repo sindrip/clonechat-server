@@ -37,4 +37,6 @@ $ npm start
 ```
 
 ### Testing with Postman
-You can access the Postman collection [here](https://www.getpostman.com/collections/ae0ff7eb103b83bcc057)
+You need to install [Postman](https://www.getpostman.com/)
+
+You can then access the Postman collection [here](https://www.getpostman.com/collections/ae0ff7eb103b83bcc057)
