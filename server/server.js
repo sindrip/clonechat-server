@@ -1,9 +1,6 @@
-require('./config/config');
-
 // DEPENDENCIES
 const express = require('express');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
+const bodyParser = require('body-parser')
 
 const knex = require('./db/knex.js');
 const routes = require('./routes/routes');
@@ -12,15 +9,12 @@ const routes = require('./routes/routes');
 const app = express();
 const port = process.env.PORT;
 
+app.get('/', (req, res) => res.send('hello wjhgorld!'));
+
 // MIDDLEWARE
 app.use(bodyParser.json());
-if (process.env.NODE_ENV === 'development'){
-    app.use(morgan('dev'));
-}    
 
 //ROUTES
 app.use('/', routes);
 
-app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
-});
+app.listen(port, () => console.log(`Server listening on port ${port}`));

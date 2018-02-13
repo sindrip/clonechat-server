@@ -1,29 +1,25 @@
 {
-  "name": "clonechat-server",
-  "version": "0.1.0",
-  "description": "A simple snapchat clone",
+  "name": "docker_test",
+  "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sindrip/clonechat-server.git"
+    "development": "npm run knex_migrate && npm run watch",
+    "knex_migrate": "node ./../node_modules/knex/bin/cli.js migrate:latest --knexfile /usr/src/app/server/knexfile.js",
+    "watch": "node ./../node_modules/nodemon/bin/nodemon.js server/server.js"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sindrip/clonechat-server/issues"
-  },
-  "homepage": "https://github.com/sindrip/clonechat-server#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "knex": "^0.14.2",
-    "lodash": "^4.17.4",
-    "morgan": "^1.9.0",
+    "knex": "^0.14.3",
+    "lodash": "^4.17.5",
     "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.12"
   }
 }

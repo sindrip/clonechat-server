@@ -1,42 +1,22 @@
 # clonechat-server
-# Dev. environment setup
-### Installation
+### Development guide
 
-clonechat-server requires [Node.js](https://nodejs.org/) to run.
-It also requires a postgres database named clonechat.
-
-To install the dependencies
-
-```sh
-$ cd git/clonechat-server
-$ npm i
-```
-To create the database tables
-```sh
-$ cd git/clonechat-server/server
-$ knex migrate:latest --env development
-```
+clonechat-server is developed through [Docker](https://www.docker.com/community-edition#/download).
+The only requirement is that you have [Docker](https://www.docker.com/community-edition#/download) and [Docker Compose](https://docs.docker.com/compose/install/) installed.
 
 ### Starting the server
-You need to have a config.json file under /clonechat-server/server/config with the relevant keys filled in
-```json
-{
-    "development": {
-        "PORT": 3000,
-        "DATABASE_NAME": "clonechat",
-        "DATABAUSE_USER": "postgres",
-        "DATABASE_PW": "1234"
-    }
-}
-```
 
-To start the server
+To start the server cd into the root project directory and start docker-compose
 ```sh
 $ cd git/clonechat-server
-$ npm start
+$ docker-compose up --build
 ```
+
+Nodemon is running so the server is reloaded on every file change
 
 ### Testing with Postman
 You need to install [Postman](https://www.getpostman.com/)
 
 You can then access the Postman collection [here](https://www.getpostman.com/collections/ae0ff7eb103b83bcc057)
+
+The API is exposed on localhost:3000 on your host machine

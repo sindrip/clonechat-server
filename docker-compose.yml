@@ -1,0 +1,23 @@
+version: '3'
+
+services:  
+  postgres:
+    image: postgres:10.2-alpine
+    environment:
+      POSTGRES_USER: cchat
+      POSTGRES_DB: clonechat
+      POSTGRES_PASSWORD: 123456
+  web:
+    build:
+      context: .
+    command: npm run development
+    volumes:
+      - .:/usr/src/app
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgres://cchat:123456@postgres/clonechat
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
