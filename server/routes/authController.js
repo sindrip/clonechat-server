@@ -49,8 +49,7 @@ module.exports.login = async (req, res) => {
 
     const user = await User.findByUsername(omittedBody.username);
 
-    // Need to add sessions to server.js
-    // req.session.user_id = user.id;
+    req.session.user_id = user.id;
 
     return res.sendStatus(200);
 };
