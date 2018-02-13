@@ -20,3 +20,11 @@ You need to install [Postman](https://www.getpostman.com/)
 You can then access the Postman collection [here](https://www.getpostman.com/collections/ae0ff7eb103b83bcc057)
 
 The API is exposed on localhost:3000 on your host machine
+
+### Migrating DB to production
+Run the following command in the project directory
+
+ ```sh
+$  heroku run knex migrate:latest --knexfile="./server/knexfile.js"
+```
+
