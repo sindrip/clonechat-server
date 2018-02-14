@@ -28,10 +28,10 @@ app.get('/', (req, res) => res.send('hello asdfwd!'));
 app.use(bodyParser.json());
 
 // Something something https
-if (app.get('env') === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    session_config.cookie.secure = true // serve secure cookies
-}
+// if (app.get('env') === 'production') {
+//     app.set('trust proxy', 1) // trust first proxy
+//     session_config.cookie.secure = true // serve secure cookies
+// }
 app.use(session(session_config));
 
 //ROUTES
