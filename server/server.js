@@ -17,7 +17,7 @@ const session_config = {
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 600 * 1000}, // 10 minutes maxage
+    cookie: { maxAge: null}, // session cookie
     store,
 }
 
