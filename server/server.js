@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 // Something something https
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
+    session_config.cookie.secure = true // serve secure cookies
 }
 app.use(session(session_config));
 
