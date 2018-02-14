@@ -9,6 +9,7 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 // Authenticated routes, require a user to be logged in
+router.delete('/logout', authenticate, authController.logout);
 router.get('/testlogin', authenticate, (req, res) => res.send('User is logged in'));
 
 

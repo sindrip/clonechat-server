@@ -53,3 +53,10 @@ module.exports.login = async (req, res) => {
 
     return res.sendStatus(200);
 };
+
+module.exports.logout = async (req, res) => {
+
+    await req.session.destroy();
+
+    return res.sendStatus(200);
+}
