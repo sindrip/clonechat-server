@@ -21,9 +21,6 @@ const session_config = {
     store,
 }
 
-// are we up yet?
-app.get('/', (req, res) => res.send('hello asdfwd!'));
-
 // MIDDLEWARE
 app.use(bodyParser.json());
 

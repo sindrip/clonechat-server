@@ -8,6 +8,7 @@ services:
       POSTGRES_DB: clonechat
       POSTGRES_PASSWORD: 123456
   web:
+    image: clonechatserver
     build:
       context: .
     command: npm run development

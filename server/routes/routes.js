@@ -4,6 +4,9 @@ const router = express.Router();
 const authController = require('./authController');
 const {authenticate} = require('./../middleware/authenticate');
 
+// are we up yet?
+router.get('/', (req, res) => res.send('Docker hub test!'));
+
 // Public routes
 router.post('/register', authController.register);
 router.post('/login', authController.login);
