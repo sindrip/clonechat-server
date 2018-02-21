@@ -18,6 +18,7 @@ router.get('/testlogin', authenticate, (req, res) => res.send('User is logged in
 
 router.post('/users/me/friends', authenticate, userController.addFriend);
 router.get('/users/me/friends', authenticate, userController.getFriends);
+router.get('/users', authenticate, userController.searchForUsername);
 
 
 module.exports = router;
