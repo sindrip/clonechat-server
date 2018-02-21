@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const authController = require('./authController');
+const userController = require('./userController');
 const {authenticate} = require('./../middleware/authenticate');
 
 // are we up yet?
@@ -14,6 +15,11 @@ router.post('/login', authController.login);
 // Authenticated routes, require a user to be logged in
 router.delete('/logout', authenticate, authController.logout);
 router.get('/testlogin', authenticate, (req, res) => res.send('User is logged in'));
+
+router.post('/users/me/friends', authenticate, userController.addFriend);
+router.get('/users/me/friends', authenticate, userController.getFriends);
+router.delete('/users/me/friends', authenticate, userController.deleteFriend);
+router.get('/users', authenticate, userController.searchForUsername);
 
 
 module.exports = router;
