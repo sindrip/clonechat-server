@@ -103,3 +103,16 @@ module.exports.getFriendsByUserId = async (user_id) => {
     
     return result;
 };
+
+module.exports.searchForUsername = async (user_id, username) => {
+    if (!username) {
+        return null;
+    }
+
+    const result = await knex('users')
+        .select(['id', 'username'])
+        .where('username', 'like', `%${username}%`)
+        .andWhere('id', '<>', user_id);
+
+    return result;
+}
