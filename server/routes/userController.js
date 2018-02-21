@@ -32,6 +32,29 @@ module.exports.getFriends = async (req, res) => {
     return res.status(200).send(result);
 };
 
+module.exports.deleteFriend = async (req, res) => {
+    const body = _.pick(req.body, [
+        'username',
+    ]);
+    const omittedBody = _.omitBy(body, _.isNil);
+    if (Object.keys(omittedBody).length !== 1) {
+        return res.sendStatus(400);
+    }
+
+    const username_exists = await User.findByUsername(omittedBody.username)
+    if (!username_exists) {
+        return res.sendStatus(400);
+    }
+
+    const result = await User.deleteFriendByUserId(req.session.user_id, username_exists.id);
+    if (!result) {
+        console.log('here2')
+        return res.sendStatus(400);
+    }
+
+    return res.sendStatus(200);
+};
+
 module.exports.searchForUsername = async (req, res) => {
     if (!req.query.username) {
         return res.sendStatus(400);

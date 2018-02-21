@@ -104,6 +104,21 @@ module.exports.getFriendsByUserId = async (user_id) => {
     return result;
 };
 
+module.exports.deleteFriendByUserId = async (user_id, friend_id) => {
+    if (!user_id || !friend_id) {
+        return null;
+    }
+
+    const result = await knex('users_friends')
+        .where({
+            user_id,
+            friend_id,
+        })
+        .del();
+
+    return result;
+};
+
 module.exports.searchForUsername = async (user_id, username) => {
     if (!username) {
         return null;
