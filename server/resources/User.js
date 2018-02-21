@@ -54,4 +54,80 @@ module.exports.findPasswordByUsername = async (username) => {
     }
 
     return result[0].password;
+};
+
+module.exports.addFriendToUserId = async (user_id, friend_id) => {
+    if (!user_id || !friend_id) {
+        return null;
+    }
+
+    if (user_id === friend_id) {
+        return null;
+    }
+
+    const exists = await knex('users_friends')
+        .select('*')
+        .where({
+            user_id,
+            friend_id,
+        });
+
+    if (exists.length !== 0) {
+        return null;
+    }
+
+    const result = await knex('users_friends')
+        .returning('*')
+        .insert({
+            user_id,
+            friend_id,
+        });
+
+    if (!result) {
+        return null;
+    }
+
+    return result[0];
+}
+
+module.exports.getFriendsByUserId = async (user_id) => {
+    if (!user_id) {
+        return null;
+    };
+
+    const result = await knex('users_friends')
+        .returning('friend_id')
+        .where({
+            user_id,
+        });
+    
+    return result;
+};
+
+module.exports.deleteFriendByUserId = async (user_id, friend_id) => {
+    if (!user_id || !friend_id) {
+        return null;
+    }
+
+    const result = await knex('users_friends')
+        .where({
+            user_id,
+            friend_id,
+        })
+        .del();
+
+    return result;
+};
+
+module.exports.searchForUsername = async (user_id, username) => {
+    if (!username) {
+        return null;
+    }
+
+    const result = await knex('users')
+        .select(['id', 'username'])
+        .where('username', 'like', `%${username}%`)
+        .andWhere('id', '<>', user_id);
+
+    return result;
 }
