@@ -29,7 +29,7 @@ module.exports.getFriends = async (req, res) => {
         return res.sendStatus(400);
     }
 
-    return res.status(200).send(result);
+    return res.status(200).send({userlist: result});
 };
 
 module.exports.deleteFriend = async (req, res) => {
@@ -48,7 +48,6 @@ module.exports.deleteFriend = async (req, res) => {
 
     const result = await User.deleteFriendByUserId(req.session.user_id, username_exists.id);
     if (!result) {
-        console.log('here2')
         return res.sendStatus(400);
     }
 
@@ -65,5 +64,5 @@ module.exports.searchForUsername = async (req, res) => {
         return res.sendStatus(400);
     }
 
-    return res.status(200).send(result);
+    return res.status(200).send({userlist: result});
 };
