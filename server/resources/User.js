@@ -96,7 +96,8 @@ module.exports.getFriendsByUserId = async (user_id) => {
     };
 
     const result = await knex('users_friends')
-        .returning('friend_id')
+        .select(['username'])
+        .join('users', 'users.id', '=', 'users_friends.friend_id')
         .where({
             user_id,
         });
