@@ -1,48 +1,75 @@
-// const AWS = require('aws-sdk');
-
-// AWS.config.update({
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//     region: 'eu-west-1',
-// });
-
-// s3 = new AWS.S3({
-//     apiVersion: '2006-03-01',
-//     endpoint: process.env.LOCALSTACK_HOSTNAME,
-//     s3ForcePathStyle: true,
-// });
+const uuid = require('uuid');
 
 const s3 = require('../aws/s3');
+const Image = require('./../resources/Image');
+
+const BUCKET_NAME = 'clonechatbucket'
+
+let createBucketIfNotExists = async () => {
+    const data = await s3.listBuckets().promise();
+    console.log(data.Buckets);
+    const size = data.Buckets.filter(b => b.Name === BUCKET_NAME).length;
+    console.log(size);
+    if (size === 0) {
+        console.log('create bucket');
+        const bucket = await s3.createBucket({Bucket: BUCKET_NAME}).promise();
+    } else {
+        console.log('already created');
+    }
+};
 
 module.exports.upload = async (req, res) => {
-    console.log(process.env.LOCALSTACK_URL);
-    console.log('here1');
+    await createBucketIfNotExists();
+
+    filename = uuid();
     
-    s3.listBuckets(function(err, data) {
-        if (err) {
-            console.log('here2');
-            
-            console.log("Error", err);
-        } else {
-            console.log('here3');
-            console.log("Bucket List", data.Buckets);
-            data.Buckets.map((b) => {
-                console.log(b);
-                if (b.Name === 'flot') {
-                    console.log('found')
-                }
-            });
-        }
-     });
+    try {
+        await s3.putObject({
+            Bucket: BUCKET_NAME,
+            Key: filename,
+            Body: req.file.buffer,
+        }).promise();
+    } catch(e) {
+        return res.status(400).send();
+    }
 
-    //  s3.createBucket({Bucket: 'flot'}, (err, data) => {
-    //     if (err) {
-    //         console.log("Error", err);
-    //      } else {
-    //         console.log("Success", data.Location);
-    //      }
-    //  });
-     console.log('here4');
+    const image = await Image.create(filename, req.session.user_id);
 
-    return res.sendStatus(200);
+    return res.status(200).send(image);
 }
+
+module.exports.getSignedUrl = async (req, res) => {
+    if (!req.params.id || isNaN(Number(req.params.id))) {
+        return res.status(400).send();
+    }
+
+    if (!(await Image.userHasAccess(req.session.user_id, req.params.id))) {
+        return res.status(400).send();
+    }
+
+    const result = await Image.findById(req.params.id);
+    if (!result) {
+        return res.sendStatus(400);
+    }
+
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: result.uuid,
+    };
+
+    try {
+        await s3.headObject(params).promise();
+    } catch (e) {
+        return res.status(400).send();
+    }
+
+    let url = s3.getSignedUrl('getObject', params);
+    if (!url) {
+        return res.status(400).send();
+    }
+    if (process.env.NODE_ENV === 'development') {
+        url = url.replace(/http:\/\/localstack:4572/, 'http://localhost:4572');
+    }
+
+    return res.redirect(url);
+};
