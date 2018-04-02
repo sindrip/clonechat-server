@@ -1,12 +1,22 @@
 version: '3'
 
-services:  
+services:
+  localstack:
+    image: localstack/localstack:0.8.6
+    environment:
+      SERVICES: s3
+      DEFAULT_REGION: eu-west-1
+    ports:
+      - 4572:4572
+      - 8080:8080
+
   postgres:
     image: postgres:10.2-alpine
     environment:
       POSTGRES_USER: cchat
       POSTGRES_DB: clonechat
       POSTGRES_PASSWORD: 123456
+
   web:
     image: clonechatserver
     build:
@@ -18,8 +28,12 @@ services:
       NODE_ENV: development
       PORT: 3000
       DATABASE_URL: postgres://cchat:123456@postgres/clonechat
+      LOCALSTACK_HOSTNAME: http://localstack:4572
       SESSION_SECRET: foobar
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: bar
     ports:
       - 3000:3000
     depends_on:
       - postgres
+      - localstack
