@@ -33,7 +33,7 @@ module.exports.getMyMessages = async (req, res) => {
         return res.status(400).send();
     }
 
-    return res.status(200).send(result);
+    return res.status(200).send({messagelist: result});
 };
 
 module.exports.deleteMessage = async (req, res) => {
