@@ -34,7 +34,7 @@ module.exports.getMessagesByUserId = async (id) => {
     }
 
     const result = await knex('messages')
-        .select(['image_id', 'username'])
+        .select(['image_id', 'username', 'created_at'])
         .join('users', 'users.id', '=', 'messages.sender_id')
         .where({
             recipient_id: id,
@@ -43,6 +43,8 @@ module.exports.getMessagesByUserId = async (id) => {
     if (!result) {
         return null;
     }
+
+    console.log(result);
 
     return result;
 }
