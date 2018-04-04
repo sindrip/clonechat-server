@@ -2,6 +2,8 @@ const uuid = require('uuid');
 
 const s3 = require('../aws/s3');
 const Image = require('./../resources/Image');
+const Message = require('./../resources/Message');
+
 
 const BUCKET_NAME = 'clonechatbucket'
 
