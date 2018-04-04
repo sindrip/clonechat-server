@@ -71,5 +71,7 @@ module.exports.getSignedUrl = async (req, res) => {
         url = url.replace(/http:\/\/localstack:4572/, 'http://localhost:4572');
     }
 
+    await Message.deleteMessageById(req.session.user_id, req.params.id);
+
     return res.redirect(url);
 };
