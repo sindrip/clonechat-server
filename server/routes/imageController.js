@@ -9,19 +9,22 @@ const BUCKET_NAME = 'clonechatbucket'
 
 let createBucketIfNotExists = async () => {
     const data = await s3.listBuckets().promise();
-    console.log(data.Buckets);
     const size = data.Buckets.filter(b => b.Name === BUCKET_NAME).length;
-    console.log(size);
     if (size === 0) {
         console.log('create bucket');
+        firstRun = false;
         const bucket = await s3.createBucket({Bucket: BUCKET_NAME}).promise();
     } else {
         console.log('already created');
     }
 };
 
+let firstRun = true;
+
 module.exports.upload = async (req, res) => {
-    await createBucketIfNotExists();
+    if (firstrun) {
+        await createBucketIfNotExists();
+    }
 
     filename = uuid();
     
