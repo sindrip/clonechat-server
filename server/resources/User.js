@@ -61,10 +61,6 @@ module.exports.addFriendToUserId = async (user_id, friend_id) => {
         return null;
     }
 
-    if (user_id === friend_id) {
-        return null;
-    }
-
     const exists = await knex('users_friends')
         .select('*')
         .where({
@@ -128,7 +124,6 @@ module.exports.searchForUsername = async (user_id, username) => {
     const result = await knex('users')
         .select(['id', 'username'])
         .where('username', 'like', `%${username}%`)
-        .andWhere('id', '<>', user_id);
 
     return result;
 }
