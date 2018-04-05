@@ -22,7 +22,7 @@ let createBucketIfNotExists = async () => {
 let firstRun = true;
 
 module.exports.upload = async (req, res) => {
-    if (firstrun) {
+    if (firstRun) {
         await createBucketIfNotExists();
     }
 
