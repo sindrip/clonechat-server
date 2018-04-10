@@ -9,7 +9,8 @@ The only requirement is that you have [Docker](https://www.docker.com/community-
 To start the server cd into the root project directory and start docker-compose
 ```sh
 $ cd git/clonechat-server
-$ docker-compose up --build
+$ docker-compose build
+$ docker-compose up
 ```
 
 Nodemon is running so the server is reloaded on every file change
@@ -22,9 +23,9 @@ You can then access the Postman collection [here](https://www.getpostman.com/col
 The API is exposed on localhost:3000 on your host machine
 
 ### Migrating DB to production
-Run the following command in the project directory
+Run the following command in the project directory on the host machine
 
  ```sh
-$  heroku run knex migrate:latest --knexfile="./server/knexfile.js"
+$  npm run knex_migrate
 ```
 
